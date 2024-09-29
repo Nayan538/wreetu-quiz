@@ -1,0 +1,15 @@
+.ts-control, .ts-control input{
+    color: var(--dark) !important;
+}
+
+
+.table.table-bordered td, .table.table-bordered th, .table.table-bordered tr {
+    border: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color) !important;
+    border-left: 1px solid var(--border-color) !important;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: var(--color-lighter);
+    opacity: 1;
+}
