@@ -488,6 +488,15 @@
                     <span class="toggle-icon"></span>
                 </a>
                 <ul>
+                    @if(hasPermission('users.*'))
+                    <li>
+                        <a href="{{ route('users.index') }}"
+                            class="has-child {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                            <span
+                                class="nav-icon uil uil-bell"></span>{{ t_('menu.user') }}
+                        </a>
+                    </li>
+                    @endif
                     @if (hasPermission('sms.*'))
                         <li class="has-subchild {{ request()->routeIs('sms.*') ? 'open' : '' }}">
                             <a href="#" class="{{ request()->routeIs('sms.*') ? 'active' : '' }}">

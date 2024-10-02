@@ -11,9 +11,8 @@ class UserService
         return User::query()->paginate($limit);
     }
     
-    public function create(array $data)
+    public function store(array $data)
     {
-        // dd($data);
         return User::create($data);
     }
 

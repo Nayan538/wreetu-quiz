@@ -7,6 +7,7 @@ use App\Http\Controllers\AccessControl\RoleController;
 use App\Http\Controllers\AccessControl\ServiceNameController;
 use App\Http\Controllers\AccessControl\SmsTemplateController;
 use App\Http\Controllers\AccessControl\TriggerNameController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GeoLocationController;
 use App\Http\Controllers\Notifications\GeneralNotificationController;
@@ -60,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     //         return getDistrict($request->division);
     //     }
     // })->name('locations');
+    Route::resource('users', UserController::class);
 
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 

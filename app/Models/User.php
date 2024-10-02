@@ -61,11 +61,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(GeneralNotification::class, 'user_general_notification', 'user_id', 'general_notification_id');
     }
 
-    public function employee()
-    {
-        return $this->hasOne(Employee::class);
-    }
-
+   
     public function branch()
     {
         return $this->belongsTo(Branch::class);

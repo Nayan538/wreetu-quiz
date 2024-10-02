@@ -172,7 +172,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         DebugbarServiceProvider::class,
         ModuleProvider::class,
-        Modules\HRMS\Providers\HRMSServiceProvider::class,
         Modules\LocationManager\Providers\LocationManagerServiceProvider::class,
         // Modules\Dealer\Providers\DealerServiceProvider::class,
         // Add your module providers here

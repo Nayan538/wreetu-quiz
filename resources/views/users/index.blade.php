@@ -54,12 +54,12 @@
                                                 class="far fa-edit"></i></a>
                                     @endif
 
-                                    @if (hasPermission('users.update'))
+                                    {{-- @if (hasPermission('users.update'))
                                         <a href="{{ route('users.edit_password', $user->id) }}"
                                             class="btn btn-outline-info">
                                             <i class="fas fa-key"></i>
                                         </a>
-                                    @endif
+                                    @endif --}}
 
                                     @if (hasPermission('users.destroy'))
                                         <button type="button" data-action="{{ route('users.destroy', $user->id) }}"
