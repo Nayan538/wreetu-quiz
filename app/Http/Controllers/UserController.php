@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccessControl\Branch;
 use App\Models\AccessControl\Role;
 use App\Models\User;
 use App\Services\UserService;
@@ -37,7 +38,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $data['roles'] = Role::get();
+        $data['branches'] = Branch::get();
+
+        return view('users.create', $data);
     }
 
     /**
@@ -46,9 +50,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|password',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required',
+            'branch_id' => 'required|exists:branches,id',
+            'status' => 'required',
         ]);
         $this->service->store($validate);
         return redirect()->route('users.index')->with('success', 'User created successfully.');

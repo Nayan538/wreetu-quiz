@@ -1,51 +1,57 @@
-{{-- Company: Wreetu Helth. --}}
-{{-- Author: Md Shadhin --}}
-{{-- Developer: Md Shadhin --}}
-{{-- Copywrite: 2024 --}}
-
+@section('title', 'User Create')
+@section('description', 'User Create ')
 @extends('layout.app')
-
-@section('title', 'Create A User')
-
-@section('page-header')
-    <div class="page-title">Create A User</div>
-
-    <nav class="breadcrumb-style-one" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('users.index') }}">Create A User</a></li>
-        </ol>
-    </nav>
-@endsection
 @section('content')
 
-    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 page-title-wrapper">
-        <div class="row align-items-center">
-            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search align-self-center">
-                <div class="inner-page-title pt-1">Create A User</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="breadcrumb-main">
+                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#"><i class="las la-home"></i>Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ trans('menu.create-user-menu-title') }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="action-btn mt-sm-0 mt-15">
+                        <a href="{{ route('users.index') }}" class="btn btn-warning btn-default btn-squared radius-md shadow2 btn-sm"><i class="fa fa-list"></i> List</a>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center user-member__title mb-2">
+                    <h4 class="text-capitalize">{{ trans('user create') }}</h4>
+                </div>
+                <x-error-alart />
             </div>
         </div>
-    </div>
+        <div class="card mb-50">
+            <div class="row justify-content-center">
+                <div class="col-sm-10">
+                    <div class="mt-40 mb-50">
 
-    <div class="col-xl-12 col-sm-12 layout-spacing">
-        <div class="statbox widget box box-shadow">
-            {{-- alert whene error --}}
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-
-                    <strong>Whoops!</strong> {{ $errors->first() }}
-                </div>
-            @endif
-            <div class="row">
-                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                     <form action="{{ route('users.store') }}" method="POST" class="needs-validation" novalidate>
                         @csrf
 
                         <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label " for="branch">Branch : </label>
+                            <div class="col-lg-10">
+                                <select id="select-beast" class="form-select tom-select" name="branch_id"
+                                    autocomplete="off">
+                                    <option value="">Select a Branch...</option>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{ $branch->id }}" {{ old('branch_id') == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label class="col-lg-2 col-form-label " for="name">Name : </label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="name" id="name"
+                                <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}"
                                     placeholder="Enter Your Name">
                             </div>
                         </div>
@@ -53,7 +59,7 @@
                         <div class="row mb-3">
                             <label class="col-lg-2 col-form-label " for="email">Email:</label>
                             <div class="col-lg-10">
-                                <input type="email" class="form-control" name="email" id="email"
+                                <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}"
                                     placeholder="Enter Your Email">
                             </div>
                         </div>
@@ -62,19 +68,11 @@
                         <div class="row mb-3">
                             <label class="col-lg-2 col-form-label " for="password">Password:</label>
                             <div class="col-lg-10">
-                                <input type="password" class="form-control" name="password" id="password"
+                                <input type="password" class="form-control" name="password" id="password" value="{{ old('password') }}"
                                     placeholder="Enter Your Password" autocomplete="new-password">
                             </div>
                         </div>
-                        {{-- confirm password --}}
-                        <div class="row mb-3">
-                            <label class="col-lg-2 col-form-label " for="confirm_password">Confirm Password:</label>
-                            <div class="col-lg-10">
-                                <input type="password" class="form-control" name="confirm_password" id="confirm_password"
-                                    placeholder="Enter Your Confirm Password" autocomplete="new-password">
-                            </div>
-                        </div>
-
+                     
                         <div class="row mb-3">
                             <label class="col-lg-2 col-form-label " for="user_roles">Assign A role</label>
                             <div class="col-lg-10">
@@ -82,17 +80,26 @@
                                     placeholder="Select a person..." autocomplete="off">
                                     <option value="">Select a person...</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        <option value="{{ $role->id }}" {{ old('user_roles') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-
+                        <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label " for="status">Status : </label>
+                            <div class="col-lg-10">
+                                <select class="form-select tom-select" name="status" id="status">
+                                    <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Submit form</button>
                         </div>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>
