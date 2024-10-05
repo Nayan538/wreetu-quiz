@@ -480,9 +480,9 @@
         
         @if (hasPermission('access_control.*'))
             <li
-                class="has-child {{ request()->routeIs('access_control.*') || request()->routeIs('sms.*') || request()->routeIs('notifications.*') || request()->routeIs('history.*') ? 'open' : '' }}">
+                class="has-child {{ request()->routeIs('access_control.*')|| request()->routeIs('users.*') || request()->routeIs('sms.*') || request()->routeIs('notifications.*') || request()->routeIs('history.*') ? 'open' : '' }}">
                 <a href="#"
-                    class="{{ request()->routeIs('access_control.*') || request()->routeIs('sms.*') || request()->routeIs('notifications.*') || request()->routeIs('history.*') ? 'active' : '' }}">
+                    class="{{ request()->routeIs('access_control.*')|| request()->routeIs('users.*') || request()->routeIs('sms.*') || request()->routeIs('notifications.*') || request()->routeIs('history.*') ? 'active' : '' }}">
                     <span class="nav-icon fas fa-cogs"></span>
                     <span class="menu-text">{{ t_('menu.Settings') }}</span>
                     <span class="toggle-icon"></span>
@@ -493,7 +493,7 @@
                         <a href="{{ route('users.index') }}"
                             class="has-child {{ request()->routeIs('users.*') ? 'active' : '' }}">
                             <span
-                                class="nav-icon uil uil-bell"></span>{{ t_('menu.user') }}
+                                class="nav-icon uil uil-user"></span>{{ t_('menu.user') }}
                         </a>
                     </li>
                     @endif

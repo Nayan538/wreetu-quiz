@@ -1,89 +1,104 @@
-{{-- Company: Wreetu Helth. --}}
-{{-- Author: Md Shadhin --}}
-{{-- Developer: Md Shadhin --}}
-{{-- Copywrite: 2024 --}}
-
+@section('title', 'User Update')
+@section('description', 'User Update ')
 @extends('layout.app')
-
-@section('title', 'Update A Users')
-
-@section('page-header')
-    <div class="page-title">Update A Users</div>
-
-    <nav class="breadcrumb-style-one" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="#">Update A Users</a></li>
-        </ol>
-    </nav>
-@endsection
 @section('content')
 
-    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 page-title-wrapper">
-        <div class="row align-items-center">
-            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search align-self-center">
-                <div class="inner-page-title pt-1">Update A Users</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="breadcrumb-main">
+                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#"><i class="las la-home"></i>Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ trans('User Update') }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="action-btn mt-sm-0 mt-15">
+                        <a href="{{ route('users.index') }}" class="btn btn-warning btn-default btn-squared radius-md shadow2 btn-sm"><i class="fa fa-list"></i> List</a>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center user-member__title mb-2">
+                    <h4 class="text-capitalize">{{ trans('User Update') }}</h4>
+                </div>
+                <x-error-alart />
             </div>
         </div>
-    </div>
+        <div class="card mb-50">
+            <div class="row justify-content-center">
+                <div class="col-sm-10">
+                    <div class="mt-40 mb-50">
 
-    <div class="col-xl-12 col-sm-12 layout-spacing">
-        <div class="statbox widget box box-shadow">
-            <div class="row">
-                <div class="col-lg-12">
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-
-                            <strong>Whoops!</strong> {{ $errors->first() }}
-                        </div>
-                    @endif
-                </div>
-                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                    <form action="{{ route('users.update', $user->id) }}" method="POST">
+                    <form action="{{ route('users.update', $user->id) }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         @method('PUT')
 
                         <div class="row mb-3">
-                            <label class="col-lg-2 col-form-label " for="name">Name: </label>
+                            <label class="col-lg-2 col-form-label " for="branch">Branch : </label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" value="{{ old('name', $user->name) }}"
-                                    name="name" id="name" placeholder="Enter Your Name">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-lg-2 col-form-label " for="email">Email: </label>
-                            <div class="col-lg-10">
-                                <input type="email" class="form-control" value="{{ old('email', $user->email) }}"
-                                    name="email" id="email" placeholder="Enter Your Email">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-lg-2 col-form-label " for="roles">Roles: </label>
-                            <div class="col-lg-10">
-
-                                <select class="form-select tom-select" multiple name="roles[]" id="roles">
-                                    <option value="">Select a Role...</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}"
-                                            {{ $user->roles->contains('id', $role->id) ? 'selected' : '' }}>
-                                            {{ $role->name }}</option>
+                                <select id="select-beast" class="form-select tom-select" name="branch_id"
+                                    autocomplete="off">
+                                    <option value="">Select a Branch...</option>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{ $branch->id }}" {{ old('branch_id', $user->branch_id) == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label " for="name">Name : </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $user->name) }}"
+                                    placeholder="Enter Your Name">
+                            </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label " for="email">Email:</label>
+                            <div class="col-lg-10">
+                                <input type="email" class="form-control" name="email" id="email" value="{{ old('email', $user->email) }}"
+                                    placeholder="Enter Your Email">
+                            </div>
+                        </div>
+
+                        {{-- new password --}}
+                        <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label " for="password">Password:</label>
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" name="password" id="password" value="{{ old('password', $user->password_string) }}"
+                                    placeholder="Enter Your Password" autocomplete="new-password">
+                            </div>
+                        </div>
+                     
+                      
+                        <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label " for="status">Status : </label>
+                            <div class="col-lg-10">
+                                <select class="form-select tom-select" name="status" id="status">
+                                    <option value="1" {{ old('status', $user->status) == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ old('status', $user->status) == 0 ? 'selected' : '' }}>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary">Update form</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    {{-- 
+@section('page_script')
+    <script>
+        
+    </script>
+@endsection --}}
 
 @endSection

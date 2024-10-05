@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AccessControl\Role;
 use App\Models\User;
 
 class UserService
@@ -13,7 +14,7 @@ class UserService
     
     public function store(array $data)
     {        
-        return User::create([
+        $user =User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password_string' => $data['password'],
@@ -21,10 +22,24 @@ class UserService
             'branch_id' => $data['branch_id'],
             'status' => $data['status'],
         ]);
+
+        Role::create([
+            'user_id' => $user->id,
+            'role_id' => $data['role_id'],
+        ]);
+
+        return $user;
     }
     public function update(User $user, array $data)
     {
-        $user->update($data);
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password_string' => $data['password'],
+            'password' => bcrypt($data['password']),
+            'branch_id' => $data['branch_id'],
+            'status' => $data['status'],
+        ]);
         return $user;
     }
 

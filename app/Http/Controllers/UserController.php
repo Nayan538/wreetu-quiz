@@ -77,6 +77,7 @@ class UserController extends Controller
     {
         $data['user'] = $user;
         $data['roles'] = Role::get();
+        $data['branches'] = Branch::get();
         return view("users.edit", $data);
     }
 
@@ -86,8 +87,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validate = $request->validate([
-            //validate rules
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'required',
+            'branch_id' => 'required|exists:branches,id',
+            'status' => 'required|numeric',
         ]);
+
         $this->service->update($user, $validate);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
